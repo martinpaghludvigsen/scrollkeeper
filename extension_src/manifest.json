@@ -10,7 +10,10 @@
   "content_scripts": [
     {
       "matches": ["http://*/*","https://*/*"],
-      "js": ["app.js"]
+      "js": ["js/content_script.js"]
     }
-  ]
+  ],
+  	"permissions": [
+   	"tabs"
+	]
 }

@@ -13,7 +13,7 @@
 }
 
 html, body {
-	background-color: red;
+	background-color: white;
 }
 
 body {
@@ -34,4 +34,9 @@ h1 {
 #main {
 	width:307px;
 	height:421px;
+}
+
+#message {
+	position: absolute;
+	top:200px;
 }
