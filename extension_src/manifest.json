@@ -1,0 +1,16 @@
+{
+  "name": "ScrollKeeper",
+  "version": "0.1",
+  "manifest_version": 2,
+  "description": "Keep track of your scrolling",
+  "browser_action": {
+		"default_icon": "assets/icon.png",
+		"default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*","https://*/*"],
+      "js": ["app.js"]
+    }
+  ]
+}

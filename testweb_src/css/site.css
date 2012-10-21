@@ -1,0 +1,28 @@
+@CHARSET "UTF-8";
+
+@font-face
+{
+	font-family: BeBas;
+	src: url('../assets/BEBAS___.ttf')
+}
+
+html, body {
+	background-color: white;
+}
+
+body {
+}
+h1 {
+ 	font-family: BeBas, sans-serif;
+	font-size:24px;
+}
+
+#clock {
+    position: relative;
+}
+
+#main {
+	background-image:url('../img/background.png');
+	background-repeat:no-repeat;
+	height:300px;
+}
