@@ -13,7 +13,7 @@
 }
 
 html, body {
-	background-color: white;
+	background-color: grey;
 }
 
 body {
@@ -39,4 +39,53 @@ h1 {
 #message {
 	position: absolute;
 	top:200px;
+}
+
+#navigation {
+	width: 215px;
+	margin: 0px auto;
+	padding-top:92px;
+	display:block;
+}
+
+#navigation li a {
+	height: 44px;
+	width:43px;
+	background-image:url('../assets/pagination_button.png');
+	display:inline;
+	float:left;
+	background-repeat:no-repeat;
+	padding: 0px 0px 0px 0px;
+	text-indent:-9999px;
+	outline: none;
+}
+
+#pages {
+	margin-top:50px;
+}
+
+#pages div{
+	position:fixed;
+}
+
+#pages div.unselected {
+	display:none;
+}
+
+#pages div.selected {
+	display:block;
+}
+
+#navigation li a.unselected {
+	background-position:0px 0px;
+}
+
+#navigation li a.unselected:hover {
+	background-position:0px -44px;
+}
+
+
+#navigation li a.selected {
+	background-position:0px -44px;
+	border:none;
 }

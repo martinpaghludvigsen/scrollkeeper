@@ -8,18 +8,40 @@ $(function() {
 	console.log("Total scrolled from local storage: "+totalScrolled.toString());
 	
 
-	chrome.tabs.getSelected(null, function(tab) {
-	  chrome.tabs.sendMessage(tab.id, {greeting: "hello, content script"});
-	});
+	try {
+		chrome.tabs.getSelected(null, function(tab) {
+	  		chrome.tabs.sendMessage(tab.id, {greeting: "hello, content script"});
+		});
 
-	chrome.extension.onMessage.addListener(
+		chrome.extension.onMessage.addListener(
 
-		function(request, sender, sendResponse) {
-			totalScrolled += parseInt(request.totalScrolled);
-			$('#message').html(totalScrolled.toString() + " pixels scrolled");
-			console.log(request);
-			localStorage.totalScrolled = parseInt(totalScrolled);
-	});
+			function(request, sender, sendResponse) {
+				totalScrolled += parseInt(request.totalScrolled);
+				$('#message').html(totalScrolled.toString() + " pixels scrolled");
+				console.log(request);
+				localStorage.totalScrolled = parseInt(totalScrolled);
+			});
+	} catch(e) {
+		console.log(e);
+	}
+	
+	$('#navigation li a').click(function() {
+		selectPage(this.id)
+	});	
+	
+	function selectPage(navId) {
+		//Reset all navigation elements
+		$('#navigation li a').removeClass('selected');
+		$('#navigation li a').addClass('unselected');
+		//Select current navigation element
+		$('#'+navId).removeClass('unselected');
+		$('#'+navId).addClass('selected');
 		
+		//Get new page ID
+		var newPageId = navId.replace("nav_","page_");
+		$('#pages div').removeClass("selected");
+		$('#pages div').addClass("unselected");
+		$('#'+newPageId).addClass("selected");
+	}
 	
 });
