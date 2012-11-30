@@ -1,5 +1,11 @@
 @CHARSET "UTF-8";
 
+#message {
+	font-family: Quicksand-Book;
+	font-size:12px;
+	display:none;
+}
+
 @font-face
 {
 	font-family: BeBas;
@@ -10,6 +16,12 @@
 {
 	font-family:Quicksand-Light;
 	src: url('../assets/Quicksand_Light.otf');
+}
+
+@font-face
+{
+	font-family:Quicksand-Book;
+	src: url('../assets/Quicksand_Book.otf');
 }
 
 html, body {
@@ -55,9 +67,21 @@ h1 {
 	display:inline;
 	float:left;
 	background-repeat:no-repeat;
-	padding: 0px 0px 0px 0px;
 	text-indent:-9999px;
 	outline: none;
+}
+
+#navigation li a.unselected {
+	background-position:0px 0px;
+}
+
+#navigation li a.unselected:hover {
+	background-position:0px -44px;
+}
+
+#navigation li a.selected {
+	background-position:0px -44px;
+	border:none;
 }
 
 #pages {
@@ -76,16 +100,55 @@ h1 {
 	display:block;
 }
 
-#navigation li a.unselected {
+#page_1 a {
+	width:96px;
+	height:46px;
+	display:inline;
+	float:left;
 	background-position:0px 0px;
+	background-repeat:none;
+	text-indent:-9999px;
 }
 
-#navigation li a.unselected:hover {
-	background-position:0px -44px;
+#page_1 img.label {
+	margin: 20px 95px;
 }
 
+#page_1 div.distance {
+	color:white;
+}
 
-#navigation li a.selected {
-	background-position:0px -44px;
-	border:none;
+#distancecanvas {
+	margin-top:-10px;
+	display:block;
+}
+
+#page_1_unit {
+	font-family: Quicksand-Book;
+	font-size:12px;
+	position:fixed;
+	top:277px;
+	left:270px;
+}
+
+#page_1_sharebox {
+	font-family: Quicksand-Book;
+	font-size:13px;
+	color:white;
+	margin:192px 23px;
+}
+
+#page_1_controls {
+	margin: 133px 106px;
+}
+
+#page_1 a.playpause_button_stateplay {
+	background-image:url('../assets/play_button.png');
+}
+
+#page_1 a:hover{
+	background-position:0px -45px;
+}
+#page_1 a:active{
+	background-position:0px -91px;
 }
