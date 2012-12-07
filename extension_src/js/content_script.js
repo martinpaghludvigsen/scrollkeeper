@@ -2,8 +2,8 @@
 console.log("Content Script ready");
 var totalScrolled = 0;
 var lastScrolled = 0;
-var scrollThreshold = 1000;
-var scrollIncrement = 1000;
+var scrollThreshold = 250;
+var scrollIncrement = 250;
 console.log("Total scrolled on this page: "+totalScrolled);
 
 //TODO: Store all scroll progress on this page until it can be sent to the popup?

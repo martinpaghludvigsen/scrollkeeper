@@ -24,6 +24,12 @@
 	src: url('../assets/Quicksand_Book.otf');
 }
 
+@font-face
+{
+	font-family:Quicksand-Bold;
+	src: url('../assets/Quicksand_Bold.otf');
+}
+
 html, body {
 	background-color: grey;
 }
@@ -38,6 +44,16 @@ h1 {
  	font-family: Quicksand-Light, sans-serif;
 	font-size:24px;
 }
+
+a.std_link {
+	color:white;
+	text-decoration:underline;
+}
+
+a.std_link:hover {
+	text-decoration:none;
+}
+
 
 #clock {
     position: relative;
@@ -100,7 +116,7 @@ h1 {
 	display:block;
 }
 
-#page_1 a {
+#page_1_controls a {
 	width:96px;
 	height:46px;
 	display:inline;
@@ -143,6 +159,10 @@ h1 {
 }
 
 #page_1 a.playpause_button_stateplay {
+	background-image:url('../assets/stop_button.png');
+}
+
+#page_1 a.playpause_button_statepause {
 	background-image:url('../assets/play_button.png');
 }
 
@@ -151,4 +171,26 @@ h1 {
 }
 #page_1 a:active{
 	background-position:0px -91px;
+}
+
+#config {
+	padding-left:92px;
+	padding-top:40px;
+}
+
+#page_5 li a {
+	height: 41px;
+	width:124px;
+	display:block;
+	background-repeat:no-repeat;
+	text-indent:-9999px;
+	outline: none;
+}
+
+#page_5 li a.metric {
+	background-image:url('../assets/config_scale_metric.png');
+}
+
+#page_5 li a.imperial {
+	background-image:url('../assets/config_scale_imperial.png');
 }

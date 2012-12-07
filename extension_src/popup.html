@@ -14,14 +14,14 @@
 	<body>
 		<div id="main">
 			<ul id="navigation">
-				<li><a href="#" id="nav_1" class="selected">Play/Pause</a></li>
+				<li><a href="#" id="nav_1" class="unselected">Play/Pause</a></li>
 				<li><a href="#" id="nav_2" class="unselected">Graph</a></li>
 				<li><a href="#" id="nav_3" class="unselected">Total</a></li>
 				<li><a href="#" id="nav_4" class="unselected">Landmarks</a></li>
-				<li><a href="#" id="nav_5" class="unselected">Settings</a></li>
+				<li><a href="#" id="nav_5" class="selected">Settings</a></li>
 			</ul>
 			<div id="pages">
-				<div id="page_1" class="selected">
+				<div id="page_1" class="unselected">
 					<img class="label" src="assets/page1_label.png">
 					<div class="distance">
 						<canvas id="distancecanvas" width="280" height="90"></canvas>
@@ -32,7 +32,7 @@
 						<a id="playpause_button" class="playpause_button_stateplay">START!</a>
 					</div>
 					<div id="page_1_sharebox">
-						<p>Share your results on facebook / twitter</p>
+						<p>Share your results on <a href="#" id="page1_fb" class="std_link">facebook</a> / <a href="#" id="page1_twitter" class="std_link">twitter</a></p>
 					</div>
 				</div>
 				<div id="page_2" class="unselected">
@@ -44,8 +44,12 @@
 				<div id="page_4" class="unselected">
 					Landmarks
 				</div>
-				<div id="page_5" class="unselected">
-					Settings
+				<div id="page_5" class="selected">
+					<ul id="config">
+						<li><a href="#" id="page_5_scale" class="metric">SCALE</a></li>
+						<li><a href="#" id="page_5_landmarks" class="landmarks_on">LANDMARKS</a></li>
+						<li><a href="#" id="page_5_awesome" class="awesome_on">AWESOMESNESS</a></li>
+					</ul>
 				</div>
 			</div>
 			<div id="message"> </div>
