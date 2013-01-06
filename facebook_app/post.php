@@ -40,9 +40,10 @@
 	$url = 'https://graph.facebook.com/me/feed';
 	
 	$fields = array(
-	            'message' => 'I\'ve scrolled no less than '.$_distance.' meter using ScrollKeeper. ScrollKeeper is my new best friend',
+	            'message' => 'This is the user comment. They can write whatever they want here.',
 	            'picture' => 'http://detderedb.dk/scrollkeeper_fb/scrollkeeper_logo.png',
-				'url' => 'http://detderedb.dk/scrollkeeper_fb/',
+				'description' => $user->name.' has scrolled '.$_distance.' today. ScrollKeeper is a free Chrome add-on that tracks how far you walk on the roads of the internet.',
+				'link' => 'http://detderedb.dk/scrollkeeper_fb/',
 	            'access_token' => $params['access_token']
 	        );
 	

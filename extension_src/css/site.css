@@ -40,10 +40,6 @@ body {
 	background-image:url('../assets/background.png');
 	background-repeat:no-repeat;
 }
-h1 {
- 	font-family: Quicksand-Light, sans-serif;
-	font-size:24px;
-}
 
 a.std_link {
 	color:white;
@@ -126,25 +122,27 @@ a.std_link:hover {
 	text-indent:-9999px;
 }
 
-#page_1 img.label {
-	margin: 20px 95px;
-}
-
-#page_1 div.distance {
+h1.label {
+	font-family:Quicksand-Light;
+	text-align:center;
+	font-size:28px;
 	color:white;
+	margin-top: 20px;
+	width:307px;
 }
 
-#distancecanvas {
-	margin-top:-10px;
+#distancecanvas,#distancecanvas_p3 {
+	margin-top:8px;
 	display:block;
 }
 
-#page_1_unit {
+.unit {
 	font-family: Quicksand-Book;
 	font-size:12px;
 	position:fixed;
 	top:277px;
 	left:270px;
+	color:white
 }
 
 #page_1_sharebox {
@@ -174,23 +172,25 @@ a.std_link:hover {
 }
 
 #config {
-	padding-left:92px;
+	padding-left:69px;
 	padding-top:40px;
+	text-align:center;
 }
 
-#page_5 li a {
-	height: 41px;
-	width:124px;
-	display:block;
-	background-repeat:no-repeat;
-	text-indent:-9999px;
-	outline: none;
+#config li {
+	margin-bottom:36px;
 }
 
-#page_5 li a.metric {
-	background-image:url('../assets/config_scale_metric.png');
+#config a {
+	color:white;
+	font-size:20px;
+	text-decoration:none;
 }
 
-#page_5 li a.imperial {
-	background-image:url('../assets/config_scale_imperial.png');
+.config_selected {
+	font-family: Quicksand-Bold;
+}
+
+.config_unselected {
+	font-family: Quicksand-Book;
 }

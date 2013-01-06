@@ -1,7 +1,57 @@
 $(function() {
 	console.log("Script ready");
 
+
+	//	Config and data variables
+	var scale = localStorage.scale ? localStorage.scale : "metric";
+	console.log("scale: "+scale);
+	if(scale == "imperial") {
+		$('#config_1_1').removeClass('config_selected');
+		$('#config_1_2').removeClass('config_unselected');
+		$('#config_1_1').addClass('config_unselected');
+		$('#config_1_2').addClass('config_selected');
+	} else {
+		$('#config_1_1').removeClass('config_unselected');
+		$('#config_1_2').removeClass('config_selected');
+		$('#config_1_1').addClass('config_selected');
+		$('#config_1_2').addClass('config_unselected');
+	}
 	
+	var landmarks = localStorage.landmarks ? localStorage.landmarks : 1;
+	console.log("landmarks: "+landmarks);
+	if(landmarks == 0) {
+		$('#config_2_1').removeClass('config_selected');
+		$('#config_2_2').removeClass('config_unselected');
+		$('#config_2_1').addClass('config_unselected');
+		$('#config_2_2').addClass('config_selected');
+	} else {
+		$('#config_2_1').removeClass('config_unselected');
+		$('#config_2_2').removeClass('config_selected');
+		$('#config_2_1').addClass('config_selected');
+		$('#config_2_2').addClass('config_unselected');
+	}
+
+	var awesomeness = localStorage.awesomeness ? localStorage.awesomeness : 1;
+	console.log("awesomeness: "+awesomeness);
+	if(awesomeness == 0) {
+		$('#config_3_1').removeClass('config_selected');
+		$('#config_3_2').removeClass('config_unselected');
+		$('#config_3_1').addClass('config_unselected');
+		$('#config_3_2').addClass('config_selected');
+	} else {
+		$('#config_3_1').removeClass('config_unselected');
+		$('#config_3_2').removeClass('config_selected');
+		$('#config_3_1').addClass('config_selected');
+		$('#config_3_2').addClass('config_unselected');
+	}
+
+	var recording = localStorage.recording ? localStorage.recording : 1;
+	console.log("Am I REALLY recording: "+recording);
+	console.log("recording false:"+recording);
+	console.log("recording false:"+(recording == "false"));
+	
+	var distanceString;
+	var unitString;
 	
 //	Setup connection to the injected tab
 	try {
@@ -12,7 +62,7 @@ $(function() {
 		chrome.extension.onMessage.addListener(
 
 			function(request, sender, sendResponse) {
-				if(recording) {
+				if(recording != 0) {
 					totalScrolled += parseInt(request.totalScrolled);
 					$('#message').html(totalScrolled.toString() + " pixels scrolled");
 					drawDistance();
@@ -24,15 +74,6 @@ $(function() {
 		console.log(e);
 	}
 
-//	Config and data variables
-	var scale = localStorage.scale ? localStorage.scale : "metric";
-
-
-	var recording = localStorage.recording ? localStorage.recording : 1;
-	console.log("Am I REALLY recording: "+recording);
-	console.log("recording false:"+recording);
-	console.log("recording false:"+(recording == "false"));
-	
 
 	if(recording == 0) {
 		console.log("GIGA TISSER");
@@ -53,6 +94,14 @@ $(function() {
 	ctx2.font = "100px BeBas";
 	ctx2.fillStyle = "White";
 	ctx2.scale(1, -1);
+
+	var ctx3 = document.getElementById("distancecanvas_p3").getContext("2d");
+	ctx3.font = "100px BeBas";
+	ctx3.fillStyle = "White";
+	var ctx4 = document.getElementById("distancecanvas_reflection_p3").getContext("2d");
+	ctx4.font = "100px BeBas";
+	ctx4.fillStyle = "White";
+	ctx4.scale(1, -1);
 	
 	var gradient = ctx2.createLinearGradient( 0, -45, 0, 45); 
 	gradient.addColorStop( 0, 'rgba( 255, 255, 255, 0 )' ); 
@@ -61,6 +110,10 @@ $(function() {
 	ctx2.fillStyle = gradient; 
 	ctx2.rect( 0, 0, ctx2.width, 45 ); 
 	ctx2.fill();	
+	
+	ctx4.fillStyle = gradient; 
+	ctx4.rect( 0, 0, ctx2.width, 45 ); 
+	ctx4.fill();
 	
 	drawDistance();
 	setTimeout(drawDistance,500);
@@ -79,8 +132,7 @@ $(function() {
 		      height = 420,
 		      winHeight = screen.height,
 		      winWidth = screen.width,
-			  distance = (Math.round((totalScrolled / 4999) * 100) / 100), 
-			  statusText = encodeURIComponent("I've scrolled "+distance+" meters. ScrollKeeper is my new best friend");
+			  statusText = encodeURIComponent("I've scrolled "+distanceString+" "+unitString+". ScrollKeeper is my new best friend");
 		
 		left = Math.round((winWidth / 2) - (width / 2));
 		top = 0;
@@ -94,10 +146,7 @@ $(function() {
 	});
 	
 	$("#page1_fb").click(function() {
-		var distance = (Math.round((totalScrolled / 4999) * 100) / 100), 
-			statusText = encodeURIComponent("I've scrolled "+distance+" meters. ScrollKeeper is my new best friend");
-
-		window.open('http://www.detderedb.dk/scrollkeeper_fb/post.php?distance='+distance);
+		window.open('http://www.detderedb.dk/scrollkeeper_fb/post.php?distance='+distanceString+unitString);
 	});
 	
 	$('#playpause_button').click(function() {
@@ -111,7 +160,57 @@ $(function() {
 	});
 	
 	$('#page_5_scale').click(function() {
-		$('#page_5_scale').toggleClass('imperial');
+		if(scale == "metric") {
+			$('#config_1_1').removeClass('config_selected');
+			$('#config_1_2').removeClass('config_unselected');
+			$('#config_1_1').addClass('config_unselected');
+			$('#config_1_2').addClass('config_selected');
+			scale = "imperial";
+		} else {
+			$('#config_1_1').removeClass('config_unselected');
+			$('#config_1_2').removeClass('config_selected');
+			$('#config_1_1').addClass('config_selected');
+			$('#config_1_2').addClass('config_unselected');
+			scale = "metric";
+		}
+		
+		localStorage.scale = scale;
+	});
+	
+	$('#page_5_landmarks').click(function() {
+		if(landmarks == 1) {
+			$('#config_2_1').removeClass('config_selected');
+			$('#config_2_2').removeClass('config_unselected');
+			$('#config_2_1').addClass('config_unselected');
+			$('#config_2_2').addClass('config_selected');
+			landmarks = 0;
+		} else {
+			$('#config_2_1').removeClass('config_unselected');
+			$('#config_2_2').removeClass('config_selected');
+			$('#config_2_1').addClass('config_selected');
+			$('#config_2_2').addClass('config_unselected');
+			landmarks = 1;
+		}
+		
+		localStorage.landmarks = landmarks;
+	});
+	
+	$('#page_5_awesome').click(function() {
+		if(awesomeness == 1) {
+			$('#config_3_1').removeClass('config_selected');
+			$('#config_3_2').removeClass('config_unselected');
+			$('#config_3_1').addClass('config_unselected');
+			$('#config_3_2').addClass('config_selected');
+			awesomeness = 0;
+		} else {
+			$('#config_3_1').removeClass('config_unselected');
+			$('#config_3_2').removeClass('config_selected');
+			$('#config_3_1').addClass('config_selected');
+			$('#config_3_2').addClass('config_unselected');
+			awesomeness = 1;
+		}
+		
+		localStorage.awesomeness = awesomeness;
 	});
 	
 	function selectPage(navId) {
@@ -137,6 +236,8 @@ $(function() {
 
 		ctx.clearRect ( 0 , 0 , 400 , 200 );
 		ctx2.clearRect ( 0 , 0 , 400 , -200 );
+		ctx3.clearRect ( 0 , 0 , 400 , 200 );
+		ctx4.clearRect ( 0 , 0 , 400 , -200 );
 
 //TODO: Account for settings, for now use meters. We're pretending there is roughly 4999px to a meter, which is like saying PI equals 3 and furthermore will vary wildly between devices. So shoot me ...
 
@@ -163,9 +264,6 @@ $(function() {
 
 //		distance is in meters
 
-		var distanceString;
-		var unitString;
-
 		if(distance < 1) {
 			//distance is in cm until and including 0.99m
 			distanceString = formatDistanceCentimeters(distance);
@@ -190,7 +288,14 @@ $(function() {
 
 		ctx2.fillText(distanceString, 45, 0);
 		
+		ctx3.fillText(distanceString, 45, 90);
+
+		ctx4.fillText(distanceString, 45, 0);
+		
 		$('#page_1_unit').html(unitString);
+		
+		$('#page_3_unit').html(unitString);
+		
 
 	}
 	
