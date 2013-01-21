@@ -1,10 +1,13 @@
 //alert("Start scrolling!");
-console.log("Content Script ready");
-var totalScrolled = 0;
+//localStorage.totalScrolled = 0;
+var totalScrolled = localStorage.totalScrolled ? parseInt(localStorage.totalScrolled)  : 0;
 var lastScrolled = 0;
 var scrollThreshold = 250;
-var scrollIncrement = 250;
-console.log("Total scrolled on this page: "+totalScrolled);
+var sending = false;
+var windowOpen = false;
+var theTimeout;
+console.log("Content Script ready. Total scrolled on page that hasn't been sent: "+totalScrolled);
+
 
 //TODO: Store all scroll progress on this page until it can be sent to the popup?
 
@@ -15,27 +18,56 @@ chrome.extension.onMessage.addListener(
 //		console.log(sender);
 		console.log(request);
 //		console.log(sendResponse);
+		window.clearTimeout(theTimeout);
+		windowOpen = true;
+		if(request.distanceReceived) {
+			sending = false;
+//			console.log("GOT IT");
+			totalScrolled -= request.distanceReceived;
+			localStorage.totalScrolled = totalScrolled;
+			console.log("new scroll value: "+ totalScrolled);
+		} else if(request.greeting) {
+			if(totalScrolled > scrollThreshold) {
+				theTimeout = setTimeout(noWindowConnection,250);
+				chrome.extension.sendMessage({totalScrolled: totalScrolled});
+			}
+		} else {
+			console.log("I DIDN'T GET IT");
+		}
 		
 });
 
-window.onscroll = scroll;
+window.onscroll = doScroll;
  
-function scroll () {
+function doScroll (oEvent) {
+	
+//	console.log(oEvent);
+	
 	//alert("scroll event detected! " + window.pageXOffset + " " + window.pageYOffset);
-	totalScrolled = window.pageYOffset;
+	var thisScroll = window.pageYOffset;
+	var diff =  Math.abs(thisScroll - lastScrolled);
+	console.log("thisScroll: "+thisScroll);
+	console.log("diff: "+diff);
+	totalScrolled += diff;
+
+	console.log("totalScrolled: "+totalScrolled);
 	
-//	alert("total scrolled: "+totalScrolled)
-	
-	if(totalScrolled > scrollThreshold) {
+	if(totalScrolled > scrollThreshold && !sending && windowOpen) {
+		sending = true;
 //		alert("Congrats, you've scrolled "+totalScrolled + " pixels pages");
 		console.log(totalScrolled+" pixels scrolled");
-		//TODO: If you don't receive a response, assume the message hasn't been received by the popup. If that is the case, don't reset the value for next broadcast
-		//TODO: only send the message and reset the value if a connection has been established. Otherwise simply store the value.
-		chrome.extension.sendMessage({totalScrolled: totalScrolled - lastScrolled});
-		scrollThreshold = totalScrolled + scrollIncrement;
-		lastScrolled = totalScrolled;
+		theTimeout = setTimeout(noWindowConnection,250);
+		chrome.extension.sendMessage({totalScrolled: totalScrolled});
 	}
 	
-	localStorage.totalScroll = totalScrolled;
+	lastScrolled = thisScroll;
+	localStorage.totalScrolled = totalScrolled;
 	
+}
+
+function noWindowConnection()
+{
+	console.log("Extension window isn't open. Storing information for later dispatch.")
+	windowOpen = false;
+	sending = false;
 }

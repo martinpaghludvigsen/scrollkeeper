@@ -1,4 +1,7 @@
 $(function() {
+	
+//	localStorage.totalScrolled = 0;
+	
 	console.log("Script ready");
 
 
@@ -68,6 +71,9 @@ $(function() {
 					drawDistance();
 					console.log(request);
 					localStorage.totalScrolled = parseInt(totalScrolled);
+					chrome.tabs.getSelected(null, function(tab) {
+						chrome.tabs.sendMessage(tab.id, {distanceReceived: request.totalScrolled});
+					});
 				}
 			});
 	} catch(e) {
