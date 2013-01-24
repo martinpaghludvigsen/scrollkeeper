@@ -49,14 +49,19 @@ $(function() {
 	}
 
 	var recording = localStorage.recording ? localStorage.recording : 1;
-	console.log("Am I REALLY recording: "+recording);
-	console.log("recording false:"+recording);
-	console.log("recording false:"+(recording == "false"));
+	console.log("recording:"+recording);
 	
 	var distanceString;
 	var unitString;
 	
-//	Setup connection to the injected tab
+	var metricPixelFactor = 4999;
+	var imperialPixelFactor = 12697;
+
+	var today = new Date();
+	var todayAtMidnight = new Date(today.getFullYear(),today.getMonth(),(today.getDate()));
+	var todayKey = todayAtMidnight.getTime();
+	console.log("todayKey: "+todayKey);
+	
 	try {
 		chrome.tabs.getSelected(null, function(tab) {
 	  		chrome.tabs.sendMessage(tab.id, {greeting: "hello, content script"});
@@ -67,10 +72,12 @@ $(function() {
 			function(request, sender, sendResponse) {
 				if(recording != 0) {
 					totalScrolled += parseInt(request.totalScrolled);
+					todayScrolled += parseInt(request.totalScrolled);
 					$('#message').html(totalScrolled.toString() + " pixels scrolled");
 					drawDistance();
 					console.log(request);
 					localStorage.totalScrolled = parseInt(totalScrolled);
+					localStorage.setItem(todayKey,parseInt(todayScrolled));
 					chrome.tabs.getSelected(null, function(tab) {
 						chrome.tabs.sendMessage(tab.id, {distanceReceived: request.totalScrolled});
 					});
@@ -82,14 +89,21 @@ $(function() {
 
 
 	if(recording == 0) {
-		console.log("GIGA TISSER");
 		$('#playpause_button').toggleClass('playpause_button_statepause');
 	}
 	
 	var totalScrolled = parseInt(localStorage.totalScrolled ? localStorage.totalScrolled : 0);
-	//	totalScrolled = 127800;
-	$('#message').html(totalScrolled + " pixels scrolled");
+	var todayScrolled = parseInt(localStorage.getItem(todayKey) ? localStorage.getItem(todayKey) : 0); 
+//	var yesterdayAtMidnight = new Date(today.getFullYear(),today.getMonth(),(today.getDate()));
+//	var yesterdayKey = yesterdayAtMidnight.getTime();
+//	var yesterdayScrolled =  parseInt(localStorage.getItem(yesterdayKey) ? localStorage.getItem(yesterdayKey) : 0); 
+	//totalScrolled = 127800;
+//	var todayScrolled = 23789;
+//	$('#message').html(totalScrolled + " pixels scrolled");
 	console.log("Total scrolled from local storage: "+totalScrolled.toString());
+	console.log("Today scrolled from local storage: "+todayScrolled.toString());
+//	console.log("Yesterday scrolled from local storage: "+yesterdayScrolled.toString());
+	
 	
 	
 //	setup the context on page 1 for displaying the distance and reflection
@@ -181,6 +195,7 @@ $(function() {
 		}
 		
 		localStorage.scale = scale;
+		drawDistance();
 	});
 	
 	$('#page_5_landmarks').click(function() {
@@ -247,8 +262,18 @@ $(function() {
 
 //TODO: Account for settings, for now use meters. We're pretending there is roughly 4999px to a meter, which is like saying PI equals 3 and furthermore will vary wildly between devices. So shoot me ...
 
-		distance = (Math.round((totalScrolled / 4999) * 100) / 100); 
-		
+		var distanceTotal,distanceToday
+
+		if(scale == "metric") {
+			distanceToday = (Math.round((todayScrolled / metricPixelFactor) * 100) / 100); 
+			distanceTotal = (Math.round((totalScrolled / metricPixelFactor) * 100) / 100); 
+			
+		} else {
+			distanceToday = (Math.round((todayScrolled / imperialPixelFactor) * 100) / 100); 
+			distanceTotal = (Math.round((totalScrolled / imperialPixelFactor) * 100) / 100); 
+			
+		}
+	
 //		distance = 0.00;
 //		distance = 0.01;
 //		distance = 0.99;
@@ -270,6 +295,30 @@ $(function() {
 
 //		distance is in meters
 
+		distanceObjToday = getDistanceString(distanceToday);
+		distanceObjTotal = getDistanceString(distanceTotal);
+		
+
+//		TODO: Format distance into cm, meters, kilometers and so on
+
+		ctx3.fillText(distanceObjTotal.distanceString, 45, 90);
+
+		ctx4.fillText(distanceObjTotal.distanceString, 45, 0);
+		
+		ctx.fillText(distanceObjToday.distanceString, 45, 90);
+
+		ctx2.fillText(distanceObjToday.distanceString, 45, 0);
+		
+		$('#page_3_unit').html(distanceObjTotal.unitString);
+		
+		$('#page_1_unit').html(distanceObjToday.unitString);
+		
+
+	}
+	
+	function getDistanceString(distance) {
+		var distanceString;
+		var unitString;
 		if(distance < 1) {
 			//distance is in cm until and including 0.99m
 			distanceString = formatDistanceCentimeters(distance);
@@ -287,22 +336,7 @@ $(function() {
 			distanceString = formatDistanceMegameters(distance);
 			unitString = "Mm";
 		}
-
-//		TODO: Format distance into cm, meters, kilometers and so on
-
-		ctx.fillText(distanceString, 45, 90);
-
-		ctx2.fillText(distanceString, 45, 0);
-		
-		ctx3.fillText(distanceString, 45, 90);
-
-		ctx4.fillText(distanceString, 45, 0);
-		
-		$('#page_1_unit').html(unitString);
-		
-		$('#page_3_unit').html(unitString);
-		
-
+		return {distanceString:distanceString,unitString:unitString};
 	}
 	
 	function formatDistanceCentimeters(distance) {
@@ -316,7 +350,6 @@ $(function() {
 	}
 	
 	function formatDistanceMeters(distance) {
-		var distanceString;
 		console.log("distance: "+distance);
 		if(distance < 10) {
 			distanceString = "0" + distance.toString();
