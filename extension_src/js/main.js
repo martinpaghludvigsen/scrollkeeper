@@ -151,13 +151,22 @@ $(function() {
 	});	
 	
 	$("#page1_twitter").click(function() {
+		
+		var distanceShareOutput;
+
+		if(distanceString.split('|').length > 1) {
+			distanceShareOutput = distanceString.split('|')[0]+unitString+distanceString.split('|')[1];
+		} else {
+			distanceShareOutput = distanceString + " " + unitString;
+		}
+		
 		var intentRegex = /twitter\.com(\:\d{2,4})?\/intent\/(\w+)/,
 		      windowOptions = 'scrollbars=yes,resizable=yes,toolbar=no,location=yes',
 		      width = 550,
 		      height = 420,
 		      winHeight = screen.height,
 		      winWidth = screen.width,
-			  statusText = encodeURIComponent("I've scrolled "+distanceString+" "+unitString+". ScrollKeeper is my new best friend");
+			  statusText = encodeURIComponent("I've scrolled "+distanceShareOutput+" today. ScrollKeeper is a free Chrome add-on that tracks how far you walk on the roads of the internet.");
 		
 		left = Math.round((winWidth / 2) - (width / 2));
 		top = 0;
@@ -171,7 +180,12 @@ $(function() {
 	});
 	
 	$("#page1_fb").click(function() {
-		window.open('http://www.detderedb.dk/scrollkeeper_fb/post.php?distance='+distanceString+unitString);
+			if(distanceString.split('|').length > 1) {
+				distanceShareOutput = distanceString.split('|')[0]+unitString+distanceString.split('|')[1];
+			} else {
+				distanceShareOutput = distanceString + "" + unitString;
+			}
+		window.open('http://www.detderedb.dk/scrollkeeper_fb/post.php?distance='+distanceShareOutput);
 	});
 	
 	$('#playpause_button').click(function() {
@@ -337,7 +351,9 @@ $(function() {
 
 		$('#page_3_unit').html(distanceObjTotal.unitString);
 		$('#page_1_unit').html(distanceObjToday.unitString);
-
+		
+		distanceString = distanceObjToday.distanceString;
+		unitString = distanceObjToday.unitString;
 	}
 	
 	function getDistanceStringImperial(distance) {
