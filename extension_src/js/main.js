@@ -55,7 +55,7 @@ $(function() {
 	var unitString;
 	
 	var metricPixelFactor = 4999;
-	var imperialPixelFactor = 12697;
+	var imperialPixelFactor = 127;
 
 	var today = new Date();
 	var todayAtMidnight = new Date(today.getFullYear(),today.getMonth(),(today.getDate()));
@@ -70,6 +70,7 @@ $(function() {
 		chrome.extension.onMessage.addListener(
 
 			function(request, sender, sendResponse) {
+				console.log("RECEIVED:"+request.totalScrolled);
 				if(recording != 0) {
 					totalScrolled += parseInt(request.totalScrolled);
 					todayScrolled += parseInt(request.totalScrolled);
@@ -78,6 +79,10 @@ $(function() {
 					console.log(request);
 					localStorage.totalScrolled = parseInt(totalScrolled);
 					localStorage.setItem(todayKey,parseInt(todayScrolled));
+					chrome.tabs.getSelected(null, function(tab) {
+						chrome.tabs.sendMessage(tab.id, {distanceReceived: request.totalScrolled});
+					});
+				} else {
 					chrome.tabs.getSelected(null, function(tab) {
 						chrome.tabs.sendMessage(tab.id, {distanceReceived: request.totalScrolled});
 					});
@@ -97,8 +102,8 @@ $(function() {
 //	var yesterdayAtMidnight = new Date(today.getFullYear(),today.getMonth(),(today.getDate()));
 //	var yesterdayKey = yesterdayAtMidnight.getTime();
 //	var yesterdayScrolled =  parseInt(localStorage.getItem(yesterdayKey) ? localStorage.getItem(yesterdayKey) : 0); 
-	//totalScrolled = 127800;
-//	var todayScrolled = 23789;
+//	totalScrolled = 127800;
+//	var todayScrolled = 600;
 //	$('#message').html(totalScrolled + " pixels scrolled");
 	console.log("Total scrolled from local storage: "+totalScrolled.toString());
 	console.log("Today scrolled from local storage: "+todayScrolled.toString());
@@ -262,7 +267,7 @@ $(function() {
 
 //TODO: Account for settings, for now use meters. We're pretending there is roughly 4999px to a meter, which is like saying PI equals 3 and furthermore will vary wildly between devices. So shoot me ...
 
-		var distanceTotal,distanceToday
+		var distanceTotal,distanceToday;
 
 		if(scale == "metric") {
 			distanceToday = (Math.round((todayScrolled / metricPixelFactor) * 100) / 100); 
@@ -271,52 +276,160 @@ $(function() {
 		} else {
 			distanceToday = (Math.round((todayScrolled / imperialPixelFactor) * 100) / 100); 
 			distanceTotal = (Math.round((totalScrolled / imperialPixelFactor) * 100) / 100); 
-			
 		}
+		
+		console.log("distanceToday:"+distanceToday);
+		console.log("distanceTotal:"+distanceTotal);
 	
 //		distance = 0.00;
 //		distance = 0.01;
 //		distance = 0.99;
 //		distance = 1;
 //		distance = 1.01;
-//		distance = 10;
-//		distance = 10.1;
-//		distance = 10.01;
-//		distance = 100.01;
-//		distance = 105.95;
-//		distance = 558.95;
-//		distance = 999.98;
-//		distance = 1000.01;
-//		distance = 9999.01;
-//		distance = 5050.99;
-//		distance = 14051.99;
-//		distance = 9999000.01;
+//		distanceToday = 127;
+//		distanceToday = 10.1;
+//		distanceToday = 10.01;
+//		distanceToday = 100.01;
+//		distanceToday = 105.95;
+//		distanceToday = 558.95;
+//		distanceToday = 999.98;
+//		distanceToday = 1200.01;
+//		distanceToday = 9999.01;
+//		distanceToday = 5050.99;
+//		distanceToday = 1800000.99;
+//		distanceToday = 9999000.01;
 		
 
-//		distance is in meters
-
-		distanceObjToday = getDistanceString(distanceToday);
-		distanceObjTotal = getDistanceString(distanceTotal);
+		if(scale == "metric") {
+			distanceObjToday = getDistanceStringMetric(distanceToday);
+			distanceObjTotal = getDistanceStringMetric(distanceTotal);
+		} else {
+			distanceObjToday = getDistanceStringImperial(distanceToday);
+			distanceObjTotal = getDistanceStringImperial(distanceTotal);
+		}
 		
+		console.log(distanceObjToday);
 
-//		TODO: Format distance into cm, meters, kilometers and so on
 
-		ctx3.fillText(distanceObjTotal.distanceString, 45, 90);
+		if(distanceObjToday.distanceString.split('|').length > 1) {
+			$('#page_1_unit').css({'left':'160px'});
+			ctx.fillText(distanceObjToday.distanceString.split('|')[0], 45, 90);
+			ctx2.fillText(distanceObjToday.distanceString.split('|')[0], 45, 0);
+			ctx.fillText(distanceObjToday.distanceString.split('|')[1], 175, 90);
+			ctx2.fillText(distanceObjToday.distanceString.split('|')[1], 175, 0);
+		} else {
+			$('#page_1_unit').css({'left':'275px'});
+			ctx.fillText(distanceObjToday.distanceString, 45, 90);
+			ctx2.fillText(distanceObjToday.distanceString, 45, 0);
+		}
 
-		ctx4.fillText(distanceObjTotal.distanceString, 45, 0);
-		
-		ctx.fillText(distanceObjToday.distanceString, 45, 90);
+		if(distanceObjTotal.distanceString.split('|').length > 1) {
+			$('#page_3_unit').css({'left':'160px'});
+			ctx3.fillText(distanceObjTotal.distanceString.split('|')[0], 45, 90);
+			ctx4.fillText(distanceObjTotal.distanceString.split('|')[0], 45, 0);
+			ctx3.fillText(distanceObjTotal.distanceString.split('|')[1], 175, 90);
+			ctx4.fillText(distanceObjTotal.distanceString.split('|')[1], 175, 0);
+		} else {
+			$('#page_3_unit').css({'left':'275px'});
+			ctx3.fillText(distanceObjTotal.distanceString, 45, 90);
+			ctx4.fillText(distanceObjTotal.distanceString, 45, 0);
+		}
 
-		ctx2.fillText(distanceObjToday.distanceString, 45, 0);
-		
 		$('#page_3_unit').html(distanceObjTotal.unitString);
-		
 		$('#page_1_unit').html(distanceObjToday.unitString);
-		
 
 	}
 	
-	function getDistanceString(distance) {
+	function getDistanceStringImperial(distance) {
+		var distanceString;
+		var unitString;
+		if(distance < 12) {
+			//distance is in inches until and including 12in
+			distanceString = formatDistanceInches(distance);
+			unitString = "in";
+		} else if(distance < 63360) {
+			//distance is in m until and including 5280ft
+			distanceString = formatDistanceFeet(distance);
+			unitString = "ft";
+		} else {
+			//above 999999 distance is in Mm (1000km)
+			distanceString = formatDistanceMiles(distance);
+			unitString = "mi";
+		}
+		return {distanceString:distanceString,unitString:unitString};
+	}
+	
+	function formatDistanceInches(distance) {
+		var distInches = Math.round(distance);
+		console.log("distInches: "+distInches);
+		if(distInches< 10) {
+			return "000"+distInches;
+		} else {
+			return "00"+distInches;
+		}
+	}
+	
+	function formatDistanceFeet(distance) {
+		console.log("formatDistanceFeet distance: "+distance);
+		var distFeet = Math.floor(distance/12);
+		var distanceString;
+		if(distFeet < 10) {
+			distanceString = "0" + distFeet.toString();
+			if(distance%12 == 0) {
+				distanceString += "|00";
+			} else if(distance%12 < 10) {
+				distanceString += "|0"+Math.floor(distance%12);
+			} else {
+				distanceString += "|"+Math.floor(distance%12);
+			}
+		} else if(distFeet < 100) {
+			distanceString = distFeet.toString();
+			if(distance%12 == 0) {
+				distanceString += "|00";
+			} else if(distance%12 < 10) {
+				distanceString += "|0"+Math.floor(distance%12);
+			} else {
+				distanceString += "|"+Math.floor(distance%12);
+			}
+		} else if(distFeet < 1000) {
+			distanceString = "0"+distFeet.toString();
+		} else {
+			distanceString = distFeet.toString();
+		}
+		return distanceString;
+	}
+	
+	function formatDistanceMiles(distance) {
+		var distanceString;
+		var distMiles = (Math.round((distance / 63360)*1000)/1000);
+		if(distMiles < 10) {
+			distanceString = distMiles.toString();
+			if(decimalPlaces(distMiles) == 0) {
+				distanceString += ".000";
+			} else if(decimalPlaces(distMiles) == 1) {
+				distanceString += "00";
+			} else if (decimalPlaces(distMiles) == 2) {
+				distanceString += "0";
+			}
+		} else if(distMiles < 100) {
+			distMiles = (Math.round(distMiles * 100) / 100);
+			distanceString = distMiles.toString();
+			if(decimalPlaces(distMiles) == 0) {
+				distanceString += ".00";
+			} else if(decimalPlaces(distMiles) == 1) {
+				distanceString += "0";
+			}		
+		} else {
+			distMiles = (Math.round(distMiles * 10) / 10);
+			distanceString = distMiles.toString();
+			if(decimalPlaces(distMiles) == 0) {
+				distanceString += ".0";
+			}
+		}
+		return distanceString;
+	}
+	
+	function getDistanceStringMetric(distance) {
 		var distanceString;
 		var unitString;
 		if(distance < 1) {
