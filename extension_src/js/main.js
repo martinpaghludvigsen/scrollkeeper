@@ -169,14 +169,13 @@ $(function() {
 			  statusText = encodeURIComponent("I've scrolled "+distanceShareOutput+" today. ScrollKeeper is a free Chrome add-on that tracks how far you walk on the roads of the internet.");
 		
 		left = Math.round((winWidth / 2) - (width / 2));
-		top = 0;
+		top = 50;
 
 		if (winHeight > height) {
 			top = Math.round((winHeight / 2) - (height / 2));
 		}
 
-		window.open('https://twitter.com/intent/tweet/?text='+statusText, 'intent', windowOptions + ',width=' + width +
-			                                           ',height=' + height + ',left=' + left + ',top=' + top);
+		window.open('https://twitter.com/intent/tweet/?text='+statusText, 'intent', windowOptions + ',width=' + width +',height=' + height + ',left=' + left + ',top=' + top);
 	});
 	
 	$("#page1_fb").click(function() {
@@ -185,7 +184,17 @@ $(function() {
 			} else {
 				distanceShareOutput = distanceString + "" + unitString;
 			}
-		window.open('http://www.detderedb.dk/scrollkeeper_fb/post.php?distance='+distanceShareOutput);
+		
+		var	  windowOptions = 'scrollbars=yes,resizable=yes,toolbar=no,location=yes',
+		      width = 413,
+		      height = 240,
+		      winHeight = screen.height,
+		      winWidth = screen.width;	
+		
+		var	left = Math.round((winWidth / 2) - (width / 2));
+		var	top = 50;
+			
+		window.open('http://www.detderedb.dk/scrollkeeper_fb/post_form.php?distance='+distanceShareOutput,'fb_share',windowOptions + ',width=' + width +',height=' + height + ',left=' + left + ',top=' + top);
 	});
 	
 	$('#playpause_button').click(function() {
