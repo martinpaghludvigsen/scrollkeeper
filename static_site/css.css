@@ -1,0 +1,209 @@
+@charset "UTF-8";
+/* CSS Document */
+
+
+*{  
+   margin:0;  
+   padding:0;  
+}  
+  
+body{  
+   text-align:center; /*For IE6 Shenanigans*/  
+   vertical-align:middle;
+   background-color: #c7c7c7;
+}  
+
+
+A:link {text-decoration: underline;; color:#fff;}
+A:visited {text-decoration: underline; color:#fff;}
+A:active {text-decoration: underline; color:#fff;}
+A:hover {text-decoration: underline; color:#fff;
+}
+
+#wrapper{  
+   width:870px;
+   height: 360px; 
+   background-image:url(hen_bg.png); background-repeat:no-repeat;  
+   margin:70px auto;  
+   vertical-align:middle;
+   text-align:left;
+   padding-top: 165px;
+ 
+}  
+
+
+#bgtop{  
+   height: 78px;
+   background-color: #363636;
+ 
+}  
+
+#faq_wrapper {
+	background-color: #7a7a7a;
+	margin: 0;
+	height: auto;
+	width:auto;
+}
+
+#faq{  
+   width:410px;  
+  background-color: #7a7a7a;
+   margin-top:0px;
+   margin-left: 15px;
+   margin-right: 15px;
+   margin-bottom: 0px;  
+   text-align:left;
+   font-family:arial, "Times New Roman", Times, serif;
+	font-size: 14px;
+	
+	color: #fff;
+
+ 
+}  
+
+#content{
+width:1010px;
+	margin:auto;
+	height: 550px;
+
+}
+
+
+#middle{
+	background-color: #7b7b7b;
+	background-image:url(middlebg.png);
+	background-position: center;
+	
+	height: 375px;
+	 margin-right: auto;
+  margin-left: auto;
+
+}
+
+
+
+
+#interface{
+	width: 330px;
+	height: 290px;
+	float:left;
+	margin-top: 90px;
+}
+
+
+
+#right{
+	width: 330px;
+	height: 400px;
+	float:left;
+	margin-top: 140px;
+	margin-left: 45px;
+	text-align: left;
+	
+
+}
+
+
+	
+
+
+
+#footer {
+	/*width:100%;;*/
+	text-align: right;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	font-size: 11px;
+	color:#363636;
+	min-width: 600px;
+	
+	margin-right: 20px;
+	
+
+}
+#right img{
+	margin-bottom: 20px;
+} 
+
+#logo {
+	position:absolute;
+	top: 7px;
+	left: 50%;
+	margin-top:15px;
+	margin-left:-164px;
+
+}
+.logo-store {
+	
+	margin-top:35px;
+
+
+}
+
+h1 {
+	font-family:arial, "Times New Roman", Times, serif;
+	font-size: 24px;
+	font-style:italic;
+}
+
+
+h3 {
+	font-family:Georgia, "Times New Roman", Times, serif;
+	font-size: 16px;
+	font-style:italic;
+	color: #999999;
+	font-weight:normal;
+	margin-top: 5px;
+}
+
+p {
+	font-family:Georgia, "Times New Roman", Times, serif;
+	font-size: 14px;
+	font-style:italic;
+	color: #999999;
+}
+
+#bottom {
+	width:500px;
+	margin:auto;
+	text-align:left;
+	padding-top: 50px;
+	font-family:Arial, "Times New Roman", Times, serif;
+	font-size:11px;
+	font-style:italic;
+	color: #fff;
+	
+	
+}
+
+
+#credits {
+	
+	
+	text-align:center;
+	padding-top: 44px;
+	font-family:Arial, "Times New Roman", Times, serif;
+	font-size:11px;
+	font-style:italic;
+	color: #666699;
+	
+}
+
+#share {
+
+	bottom: 0px;
+	text-align:center;
+	padding-top: 67px;
+	font-family:Arial, "Times New Roman", Times, serif;
+	font-size:11px;
+	font-style:italic;
+	color: #666699;
+	
+}
+
+
+
+#like {
+	position:fixed;
+	right: 10px;
+	top: 10px;
+}

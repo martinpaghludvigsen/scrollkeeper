@@ -2,7 +2,7 @@
 
 	$app_id = "472573039450804";
 	$app_secret = "004e50f9d702d99ec642359c8305efcb";
-	$my_url = "http://detderedb.dk/scrollkeeper_fb/post.php?distance=".$_GET['distance']."&comment=".urlencode($_GET['comment']);
+	$my_url = "http://www.scrollkeeper.org/post.php?distance=".$_GET['distance']."&comment=".urlencode($_GET['comment']);
 
 	session_start();
 
@@ -35,16 +35,16 @@
        . $params['access_token'];
 
      $user = json_decode(file_get_contents($graph_url));
-     echo("Hello " . $user->name);
-	 echo("<br/>Your distance has been posted to your Facebook wall. Click <a href=\"http://www.facebook.com/profile.php?id=".$user->id."\">here</a> to see it");
+     //echo("Hello " . $user->name);
+	 //echo("<br/>Your distance has been posted to your Facebook wall. Click <a href=\"http://www.facebook.com/profile.php?id=".$user->id."\">here</a> to see it");
 
 	$url = 'https://graph.facebook.com/me/feed';
 
 	$fields = array(
 	            'message' => $_usercomment,
-	            'picture' => 'http://detderedb.dk/scrollkeeper_fb/scrollkeeper_logo.png',
+	            'picture' => 'http://www.scrollkeeper.org/scrollkeeper_fb_logo.png',
 				'description' => $user->name.' has scrolled '.$_distance.' today. ScrollKeeper is a free Chrome add-on that tracks how far you walk on the roads of the internet.',
-				'link' => 'http://detderedb.dk/scrollkeeper_fb/',
+				'link' => 'http://www.scrollkeeper.org/',
 	            'access_token' => $params['access_token']
 	        );
 
@@ -65,4 +65,6 @@
 
 	//close connection
 	curl_close($ch);
+
+	echo("<script>window.close()</script>");
  ?>

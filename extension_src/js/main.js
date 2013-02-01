@@ -160,6 +160,8 @@ $(function() {
 			distanceShareOutput = distanceString + " " + unitString;
 		}
 		
+		distanceShareOutput = distanceShareOutput.replace(/^0+/, '');
+		
 		var intentRegex = /twitter\.com(\:\d{2,4})?\/intent\/(\w+)/,
 		      windowOptions = 'scrollbars=yes,resizable=yes,toolbar=no,location=yes',
 		      width = 550,
@@ -185,16 +187,19 @@ $(function() {
 				distanceShareOutput = distanceString + "" + unitString;
 			}
 		
+		distanceShareOutput = distanceShareOutput.replace(/^0+/, '');
+		
+		
 		var	  windowOptions = 'scrollbars=yes,resizable=yes,toolbar=no,location=yes',
-		      width = 413,
-		      height = 240,
+		      width = 958,
+		      height = 650,
 		      winHeight = screen.height,
 		      winWidth = screen.width;	
 		
 		var	left = Math.round((winWidth / 2) - (width / 2));
 		var	top = 50;
 			
-		window.open('http://www.detderedb.dk/scrollkeeper_fb/post_form.php?distance='+distanceShareOutput,'fb_share',windowOptions + ',width=' + width +',height=' + height + ',left=' + left + ',top=' + top);
+		window.open('http://www.scrollkeeper.org/post_form.php?distance='+distanceShareOutput,'fb_share',windowOptions + ',width=' + width +',height=' + height + ',left=' + left + ',top=' + top);
 	});
 	
 	$('#playpause_button').click(function() {

@@ -25,7 +25,7 @@
 			<form action="post.php" method="GET">
 			<textarea id="comment" name="comment" maxlength="420" placeholder="Write your own comment here"></textarea>
 			<div id="innerbox">
-				<img src="scrollkeeper_logo.png" alt="ScrollKeeper" height="114" width="114">
+				<img src="scrollkeeper_fb_logo.png" alt="ScrollKeeper" height="114" width="114">
 				<h1>ScrollKeeper</h1>
 				<h2>scrollkeeper.org</h2>
 				<p>{Your Name} has scrolled <?php echo $_distance?> today. ScrollKeeper is a free Chrome add-on that tracks how far you walk on the roads of the internet.</p>

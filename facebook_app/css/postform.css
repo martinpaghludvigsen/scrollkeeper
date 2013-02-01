@@ -3,8 +3,6 @@
 body {
 	min-width:411px;
 	min-height:238px;
-	sbackground-image:url('../guide.png');
-	sbackground-repeat:no-repeat;
 	font-family: 'lucida grande',tahoma,verdana,arial,sans-serif;
 	font-size: 11px;
 }
@@ -13,6 +11,8 @@ body {
 	border:1px solid #e5e5e5;
 	width:411px;
 	height:238px;
+	margin:auto;
+	margin-top:50px;
 }
 
 #innerbox, #comment {
