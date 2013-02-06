@@ -1,6 +1,17 @@
 @charset "UTF-8";
 /* CSS Document */
 
+@font-face
+{
+	font-family:Quicksand-Book;
+	src: url('Quicksand_Book.otf');
+}
+
+@font-face
+{
+	font-family:Quicksand-Bold;
+	src: url('Quicksand_Bold.otf');
+}
 
 *{  
    margin:0;  
@@ -53,7 +64,7 @@ A:hover {text-decoration: underline; color:#fff;
    margin-right: 15px;
    margin-bottom: 0px;  
    text-align:left;
-   font-family:arial, "Times New Roman", Times, serif;
+   font-family:Quicksand-Book, "Times New Roman", Times, serif;
 	font-size: 14px;
 	
 	color: #fff;
@@ -62,7 +73,7 @@ A:hover {text-decoration: underline; color:#fff;
 }  
 
 #content{
-width:1010px;
+	width:1120px;
 	margin:auto;
 	height: 550px;
 
@@ -93,7 +104,7 @@ width:1010px;
 
 
 #right{
-	width: 330px;
+	width: 660px;
 	height: 400px;
 	float:left;
 	margin-top: 140px;
@@ -103,6 +114,24 @@ width:1010px;
 
 }
 
+#right h1 {
+	font-family:Quicksand-Bold,serif;
+	font-style:normal;
+	color:white;
+	font-size:54px;
+	line-height:60px;
+	margin-bottom: 20px;
+	letter-spacing:2px;
+}
+
+#right p {
+	font-family:Quicksand-Book,serif;
+	font-style:normal;
+	color:white;
+	font-size:19px;
+	line-height:21px;
+	margin-bottom:18px;
+}
 
 	
 
@@ -115,7 +144,6 @@ width:1010px;
 	font-size: 11px;
 	color:#363636;
 	min-width: 600px;
-	
 	margin-right: 20px;
 	
 
@@ -129,7 +157,7 @@ width:1010px;
 	top: 7px;
 	left: 50%;
 	margin-top:15px;
-	margin-left:-164px;
+	margin-left:-220px;
 
 }
 .logo-store {
@@ -206,4 +234,6 @@ p {
 	position:fixed;
 	right: 10px;
 	top: 10px;
+	font-family:Quicksand-Book, "Times New Roman", Times, serif;
+   
 }

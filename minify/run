@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+
+rm -R ../deploy
+mkdir ../deploy
+
+cp -R ../extension_src/* ../deploy
+
+here=$(pwd)
+output=$here/../deploy
+main=$here/../extension_src/js/main.js
+content_script=$here/../extension_src/js/content_script.js
+
+java -jar $here/yuicompressor-2.4.6.jar $main > $output/js/main.js #gives the best compression
+java -jar $here/yuicompressor-2.4.6.jar $content_script > $output/js/content_script.js
+

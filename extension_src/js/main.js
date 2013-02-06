@@ -311,7 +311,7 @@ $(function() {
 	//	var yesterdayAtMidnight = new Date(today.getFullYear(),today.getMonth(),(today.getDate()));
 	//	var yesterdayKey = yesterdayAtMidnight.getTime();
 	//	var yesterdayScrolled =  parseInt(localStorage.getItem(yesterdayKey) ? localStorage.getItem(yesterdayKey) : 0); 
-	//	totalScrolled = 6250;
+	//	totalScrolled = 6250000;
 	//	var todayScrolled = 600;
 	//	console.log("Total scrolled from local storage: "+totalScrolled.toString());
 	//	console.log("Today scrolled from local storage: "+todayScrolled.toString());

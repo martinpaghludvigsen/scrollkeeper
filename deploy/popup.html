@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>
+			ScrollKeeper
+		</title>
+		<meta name="description" content="">
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/site.css">
+		<script src="js/libs/jquery-1.8.2.min.js" ></script>
+		<script src="js/main.js"></script>
+	</head>
+	<body>
+		<div id="main">
+			<ul id="navigation">
+				<li><a href="#" id="nav_1" class="selected">Play/Pause</a></li>
+				<li><a href="#" id="nav_2" class="unselected">Graph</a></li>
+				<li><a href="#" id="nav_3" class="unselected">Total</a></li>
+				<li><a href="#" id="nav_4" class="unselected">Landmarks</a></li>
+				<li><a href="#" id="nav_5" class="unselected">Settings</a></li>
+			</ul>
+			<div id="pages">
+				<div id="page_1" class="selected">
+					<h1 class="label">Distance Today</h1>
+					<div class="distance">
+						<canvas id="distancecanvas" width="280" height="90"></canvas>
+						<canvas id="distancecanvas_reflection" width="300" height="45"></canvas>
+						<span class="unit" id="page_1_unit">m</span>
+					</div>
+					<div id="page_1_controls">
+						<a id="playpause_button" class="playpause_button_stateplay">START!</a>
+					</div>
+					<div id="page_1_sharebox">
+						<p>Share your results on <a href="#" id="page1_fb" class="std_link">facebook</a> / <a href="#" id="page1_twitter" class="std_link">twitter</a></p>
+					</div>
+				</div>
+				<div id="page_2" class="unselected">
+					<h1 class="label">Coming Soon ...</h1>
+				</div>
+				<div id="page_3" class="unselected">
+					<h1 class="label">Total</h1>
+					<div class="distance">
+						<canvas id="distancecanvas_p3" width="280" height="90"></canvas>
+						<canvas id="distancecanvas_reflection_p3" width="300" height="45"></canvas>
+							<span class="unit" id="page_3_unit">m</span>
+					</div>
+				</div>
+				<div id="page_4" class="unselected">
+					<h1 class="label">Landmarks</h1>
+					<div id="landmark_container">
+						
+					</div>
+				</div>
+				<div id="page_5" class="unselected">
+					<ul id="config">
+						<li><a href="#" id="page_5_scale"><span id="config_1_1" class="config_selected">Metric (eu)</span><br><span id="config_1_2" class="config_unselected">Imperial (us)</span></a></li>
+						<li><a href="#" id="page_5_landmarks"><span id="config_2_1" class="config_selected">Landmarks on</span><br><span id="config_2_2" class="config_unselected">Landmarks off</a></span></li>
+						<li><a href="#" id="page_5_awesome"><span id="config_3_1" class="config_selected">Awesomeness on</span><br><span id="config_3_2" class="config_unselected">Awesomeness on</a></span></li>
+					</ul>
+				</div>
+			</div>
+			<div id="message"> </div>
+			
+		</div>
+	</body>
+</html>

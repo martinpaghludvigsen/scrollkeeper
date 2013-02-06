@@ -1,12 +1,15 @@
 {
   "name": "ScrollKeeper",
-  "version": "0.1",
+  "version": "1.0",
   "manifest_version": 2,
-  "description": "Keep track of your scrolling",
+  "description": "Finally there's a way to keep track, analyse and improve your online scrolling. ScrollKeeper is a free Chrome add-on that measures how far you walk on the roads of the internet. Now, go spin that wheel.",
+  "homepage_url": "http://www.scrollkeeper.org",
   "browser_action": {
 		"default_icon": "assets/icon.png",
-		"default_popup": "popup.html"
-  },
+		"default_popup": "popup.html"},
+  "icons": {
+		"48": "assets/icon48.png",
+		"128": "assets/icon128.png" },
   "content_scripts": [
     {
       "matches": ["http://*/*","https://*/*"],
