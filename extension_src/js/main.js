@@ -1,4 +1,16 @@
+
+var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-38312703-1']);
+  _gaq.push(['_trackPageview']);
+
+ (function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = 'https://ssl.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+
 $(function() {
+	 
 
 	//	console.log("Script ready");
 
@@ -355,11 +367,13 @@ $(function() {
 
 	//button handlers
 	$('#navigation li a').click(function() {
+		 _gaq.push(['_trackEvent', this.id, 'clicked']);
 		selectPage(this.id)
 	});
 
 	$("#page1_twitter").click(function() {
-
+		 _gaq.push(['_trackEvent', "Share on Twitter", 'clicked']);
+		
 		var distanceShareOutput;
 
 		if (distanceString.split('|').length > 1) {
@@ -389,6 +403,8 @@ $(function() {
 	});
 
 	$("#page1_fb").click(function() {
+		 _gaq.push(['_trackEvent', "Share on Facebook", 'clicked']);
+		
 		if (distanceString.split('|').length > 1) {
 			distanceShareOutput = distanceString.split('|')[0] + unitString + distanceString.split('|')[1];
 		} else {
@@ -411,21 +427,30 @@ $(function() {
 	});
 
 	$('#playpause_button').click(function() {
+		
+		
 		$('#playpause_button').toggleClass('playpause_button_statepause');
 		//Apparently booleans get converted to strings when stored in LocalStorage. Stupid JavaScript
-		if (recording == 0) recording = 1;
-		else recording = 0;
+		if (recording == 0) {
+			 _gaq.push(['_trackEvent', "Play", 'clicked']);
+			recording = 1;
+		} else {
+		 	_gaq.push(['_trackEvent', "Pause", 'clicked']);
+			recording = 0;
+		}
 		localStorage.recording = recording;
 	});
 
 	$('#page_5_scale').click(function() {
 		if (scale == "metric") {
+			_gaq.push(['_trackEvent', "Scale Imperial", 'clicked']);
 			$('#config_1_1').removeClass('config_selected');
 			$('#config_1_2').removeClass('config_unselected');
 			$('#config_1_1').addClass('config_unselected');
 			$('#config_1_2').addClass('config_selected');
 			scale = "imperial";
 		} else {
+			_gaq.push(['_trackEvent', "Scale Metric", 'clicked']);
 			$('#config_1_1').removeClass('config_unselected');
 			$('#config_1_2').removeClass('config_selected');
 			$('#config_1_1').addClass('config_selected');
@@ -440,12 +465,14 @@ $(function() {
 
 	$('#page_5_landmarks').click(function() {
 		if (landmarks == 1) {
+			_gaq.push(['_trackEvent', "Landmarks Off", 'clicked']);
 			$('#config_2_1').removeClass('config_selected');
 			$('#config_2_2').removeClass('config_unselected');
 			$('#config_2_1').addClass('config_unselected');
 			$('#config_2_2').addClass('config_selected');
 			landmarks = 0;
 		} else {
+			_gaq.push(['_trackEvent', "Landmarks On", 'clicked']);
 			$('#config_2_1').removeClass('config_unselected');
 			$('#config_2_2').removeClass('config_selected');
 			$('#config_2_1').addClass('config_selected');
@@ -457,6 +484,7 @@ $(function() {
 	});
 
 	$('#page_5_awesome').click(function() {
+		_gaq.push(['_trackEvent', "Awesomeness", 'clicked']);
 		if (awesomeness == 1) {
 			$('#config_3_1').removeClass('config_selected');
 			$('#config_3_2').removeClass('config_unselected');
