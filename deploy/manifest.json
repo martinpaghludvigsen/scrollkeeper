@@ -1,12 +1,16 @@
 {
   "name": "ScrollKeeper",
-  "version": "0.1",
+  "version": "1.0.2",
   "manifest_version": 2,
-  "description": "Keep track of your scrolling",
+  "description": "Finally there's a way to keep track, analyse and improve your online scrolling.",
+  "homepage_url": "http://www.scrollkeeper.org",
+  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
   "browser_action": {
 		"default_icon": "assets/icon.png",
-		"default_popup": "popup.html"
-  },
+		"default_popup": "popup.html"},
+  "icons": {
+		"48": "assets/icon48.png",
+		"128": "assets/icon128.png" },
   "content_scripts": [
     {
       "matches": ["http://*/*","https://*/*"],

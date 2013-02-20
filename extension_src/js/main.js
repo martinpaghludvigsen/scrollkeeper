@@ -43,20 +43,6 @@ $(function() {
 		$('#config_2_2').addClass('config_unselected');
 	}
 
-	var awesomeness = localStorage.awesomeness ? localStorage.awesomeness : 1;
-	//	console.log("awesomeness: "+awesomeness);
-	if (awesomeness == 0) {
-		$('#config_3_1').removeClass('config_selected');
-		$('#config_3_2').removeClass('config_unselected');
-		$('#config_3_1').addClass('config_unselected');
-		$('#config_3_2').addClass('config_selected');
-	} else {
-		$('#config_3_1').removeClass('config_unselected');
-		$('#config_3_2').removeClass('config_selected');
-		$('#config_3_1').addClass('config_selected');
-		$('#config_3_2').addClass('config_unselected');
-	}
-
 	var recording = localStorage.recording ? localStorage.recording : 1;
 	//	console.log("recording:"+recording);
 	var distanceString;
@@ -390,7 +376,7 @@ $(function() {
 			height = 420,
 			winHeight = screen.height,
 			winWidth = screen.width,
-			statusText = encodeURIComponent("I've scrolled " + distanceShareOutput + " today. ScrollKeeper is a free Chrome add-on that tracks how far you walk on the roads of the internet.");
+			statusText = encodeURIComponent("I've scrolled " + distanceShareOutput + " today. ScrollKeeper tracks how far you walk on the roads of the internet. http://www.scrollkeeper.org");
 
 		left = Math.round((winWidth / 2) - (width / 2));
 		top = 50;
@@ -483,23 +469,14 @@ $(function() {
 		localStorage.landmarks = landmarks;
 	});
 
-	$('#page_5_awesome').click(function() {
-		_gaq.push(['_trackEvent', "Awesomeness", 'clicked']);
-		if (awesomeness == 1) {
-			$('#config_3_1').removeClass('config_selected');
-			$('#config_3_2').removeClass('config_unselected');
-			$('#config_3_1').addClass('config_unselected');
-			$('#config_3_2').addClass('config_selected');
-			awesomeness = 0;
-		} else {
-			$('#config_3_1').removeClass('config_unselected');
-			$('#config_3_2').removeClass('config_selected');
-			$('#config_3_1').addClass('config_selected');
-			$('#config_3_2').addClass('config_unselected');
-			awesomeness = 1;
+	$('#page_5_reset').click(function() {
+		_gaq.push(['_trackEvent', "Reset", 'clicked']);
+		var reset = confirm("Really reset all your stats? There is no regretting this!");
+		if(reset) {
+			localStorage.clear();
+			totalScrolled = 0;
+			todayScrolled = 0;
 		}
-
-		localStorage.awesomeness = awesomeness;
 	});
 
 	function selectPage(navId) {
